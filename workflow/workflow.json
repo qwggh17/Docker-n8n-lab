@@ -1,0 +1,105 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -80
+      ],
+      "id": "04de83b2-3e11-4379-b9ab-06f85674c2bb",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/files/sample.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -32
+      ],
+      "id": "93e7ed4c-4030-43d0-9743-bcc1ef5e2a85",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "language": "pythonNative",
+        "pythonCode": "items = _items\n\nbinary = items[0][\"binary\"][\"data\"]\ntext = binary[\"data\"]\n\nsentences = []\n\nfor sentence in text.split(\".\"):\n    sentence = sentence.strip()\n    if sentence:\n        sentences.append(sentence)\n\nresult = \"\\n\\n\".join(sentences)\n\nreturn [{\n    \"json\": {\n        \"status\": \"done\",\n        \"sentences\": len(sentences)\n    },\n    \"binary\": {\n        \"data\": {\n            \"data\": result.encode(\"utf-8\").decode(\"latin1\"),\n            \"fileName\": \"out.doc\",\n            \"mimeType\": \"text/plain\"\n        }\n    }\n}]"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        128,
+        -80
+      ],
+      "id": "eb143d91-95aa-4b6e-b80d-36ba6575c761",
+      "name": "Code in Python (Native) (Beta)"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/home/node/files/out.doc",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        368,
+        16
+      ],
+      "id": "e72939bc-c160-4eb2-b869-4d94fd016203",
+      "name": "Read/Write Files from Disk1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        [
+          {
+            "node": "Code in Python (Native) (Beta)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in Python (Native) (Beta)": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "94282e7d-f533-4236-8294-5ff732e27fc9",
+  "meta": {
+    "instanceId": "264bde1df94fdd9deec304b322937ab60aa5ef69c850cd61b4b3382bfe35b0ac"
+  },
+  "id": "dPThZ2x0hPNydSFa",
+  "tags": []
+}

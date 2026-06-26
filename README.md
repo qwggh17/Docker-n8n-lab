@@ -22,6 +22,9 @@ The goal of this project was to deploy a local automation environment using Dock
 - Used a Python script inside an n8n node.
 - Generated output files from the processed input.
 
+## Workflow
+![Workflow](docs/screenshots/Docker-files.png)
+
 ## Repository structure
 ```text
 Docker-n8n-lab/

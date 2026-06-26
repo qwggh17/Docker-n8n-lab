@@ -23,6 +23,9 @@ The goal of this project was to deploy a local automation environment using Dock
 - Generated output files from the processed input.
 
 ## Workflow
+
+part of the work process:
+
 ![Workflow](docs/screenshots/Docker-files.png)
 
 ## Repository structure
